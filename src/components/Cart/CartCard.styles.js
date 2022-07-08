@@ -10,14 +10,11 @@ export const ProductContainer = styled(Row)`
   margin-top: 30px;
   border-bottom: 2px solid #e5e7eb;
   width: inherit;
-  @media only screen and (max-width: 600px) {
-    flex-direction: column;
 `;
 
 export const StyledImg = styled.img`
   height: 150px;
   width: 200px;
-  /* border-radius: 30px solid #000; */
 `;
 
 export const ProductDetailsContainer = styled(Row)`
@@ -40,8 +37,10 @@ export const PriceQuantityContainer = styled(Column)`
   }
 `;
 
-export const PriceContainer = styled.div`
+export const PriceContainer = styled(Column)`
   margin: 20px;
+  
+  }
 `;
 
 export const CustomButton = MUIStyled(Button)(() => ({

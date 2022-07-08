@@ -22,7 +22,7 @@ const initialCartItems = [
   products.items[1],
   products.items[4],
   products.items[6],
-  products.items[10],
+  products.items[11],
 ];
 
 export const getTotal = (quantity = 1, price) => {
@@ -119,7 +119,9 @@ const Cart = () => {
         </>
       ) : (
         <Typography mt={4} align="center" variant="h5">
-          No items in your Cart yet. Browse our
+          No items in your Cart yet.
+          <br />
+          Browse our
           <Link to="/products"> products section.</Link>
         </Typography>
       )}

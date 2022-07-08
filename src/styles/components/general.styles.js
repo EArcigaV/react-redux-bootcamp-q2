@@ -7,10 +7,18 @@ import Button from "@mui/material/Button";
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
+  @media (max-width: 640px) {
+    margin: 10px 0;
+  }
 `;
 
 export const Row = styled.div`
   display: flex;
+  @media (max-width: 640px) {
+    margin: 10px 0;
+
+    flex-direction: column;
+  }
 `;
 
 export const StyledButton = MUIStyled(Button)(() => ({

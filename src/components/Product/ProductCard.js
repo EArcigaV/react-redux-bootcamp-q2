@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import {
   StyledCard,
   ButtonContainer,
-  StyledButton,
+  CustomButton,
 } from "./ProductCard.styles";
 
 export default function ProductCard({ product }) {
@@ -35,9 +35,9 @@ export default function ProductCard({ product }) {
         </Typography>
         <Divider light />
         <ButtonContainer>
-          <StyledButton fullWidth variant="contained">
+          <CustomButton fullWidth variant="contained">
             Add to Cart
-          </StyledButton>
+          </CustomButton>
         </ButtonContainer>
       </CardContent>
     </StyledCard>
