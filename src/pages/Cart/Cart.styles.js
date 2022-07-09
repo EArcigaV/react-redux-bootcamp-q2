@@ -23,7 +23,7 @@ export const SummaryItem = styled(Row)`
 `;
 
 export const ProductWrapper = styled(Column)`
-  width: 80%;
+  width: 90%;
   align-items: center;
 `;
 
