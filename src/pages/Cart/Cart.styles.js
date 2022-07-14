@@ -38,3 +38,10 @@ export const CustomButton = MUIStyled(Button)(() => ({
     backgroundColor: "#00c853",
   },
 }));
+
+export const CustomButtonR = MUIStyled(Button)(() => ({
+  backgroundColor: "#203449",
+  "&:hover": {
+    backgroundColor: "#FF0000",
+  },
+}));

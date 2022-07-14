@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { selectProducts } from "../../redux/slices/cartSlice";
+
 import { Link } from "react-router-dom";
-import productsData from "../../data/products.json";
+import { CustomButton, CustomButtonR } from "./Cart.styles";
 import {
   CartWrapper,
   SummaryItem,
@@ -8,58 +10,48 @@ import {
   ProductWrapper,
   DetailsContainer,
 } from "./Cart.styles";
-import { CustomButton } from "./Cart.styles";
 
 // Components
 import Typography from "@mui/material/Typography";
 import CardofCart from "../../components/Cart/CartCard";
-
-const {
-  data: { products },
-} = productsData;
-
-const initialCartItems = [
-  products.items[1],
-  products.items[4],
-  products.items[6],
-  products.items[11],
-];
+import { useDispatch } from "react-redux";
+import { reset, remove } from "../../redux/slices/cartSlice";
 
 export const getTotal = (quantity = 1, price) => {
   return quantity * price;
 };
 
-const Cart = () => {
-  const [cartItems, setCartItems] = useState(initialCartItems);
+export default function Cart() {
+  const dispatch = useDispatch();
+  const products = useSelector(selectProducts);
 
-  const calculateTotal = (items) =>
-    items.reduce((acc, item) => acc + getTotal(item.quantity, item.price), 0);
+  function handleReset() {
+    dispatch(reset([]));
+  }
 
-  const onQuantityChange = (event, product) => {
-    console.log("Value: ", event.target.value);
+  function handleRemove({ productId }) {
+    dispatch(remove({ productId }));
+    console.log("removed", productId);
+  }
 
-    const { value } = event.target;
+  const handleQuantityChange = (e, product) => {
+    e.preventDefault();
+    console.log("Qty: ", e.target.value);
+
+    const { value } = e.target;
     if (!value || value === "0") {
-      setCartItems(cartItems.filter((item) => item.id !== product.id));
-
+      products.filter((item) => item.id !== product.id);
+      console.log("cero", value);
+      handleRemove({ productId: product.id });
       return;
     }
-    setCartItems((prev) => {
-      const isItemInCart = prev.find((item) => item.id === product.id);
-
-      if (isItemInCart) {
-        return prev.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: parseInt(event.target.value) }
-            : item
-        );
-      }
-    });
+    return e.target.value;
   };
 
+  // const posts = [];
   return (
     <div>
-      {cartItems.length > 0 ? (
+      {products.length > 0 ? (
         <>
           <Typography mt={4} align="center" variant="h4">
             Shopping Cart
@@ -71,13 +63,20 @@ const Cart = () => {
                   Products Details
                 </Typography>
               </DetailsContainer>
-              {cartItems.map((product, idx) => (
+              {products.map((product, idx, id) => (
                 <CardofCart
                   key={`${product.id}-${idx}`}
                   product={product}
-                  onQuantityChange={onQuantityChange}
+                  onQuantityChange={handleQuantityChange}
                 />
               ))}
+              <CustomButtonR
+                onClick={handleReset}
+                fullWidth
+                variant="contained"
+              >
+                Empty Cart
+              </CustomButtonR>
             </ProductWrapper>
             <SummaryWrapper>
               <Typography gutterBottom component="p" variant="h5">
@@ -88,7 +87,7 @@ const Cart = () => {
                   Items:
                 </Typography>
                 <Typography gutterBottom component="p" variant="subtitle1">
-                  {cartItems.length}
+                  {products.length}
                 </Typography>
               </SummaryItem>
               <SummaryItem>
@@ -108,7 +107,7 @@ const Cart = () => {
                   variant="subtitle1"
                   width="100px"
                 >
-                  $ {calculateTotal(cartItems).toFixed(2)}
+                  {/* $ {calculateTotal(products).toFixed(2)} */}
                 </Typography>
               </SummaryItem>
               <CustomButton fullWidth variant="contained">
@@ -127,6 +126,4 @@ const Cart = () => {
       )}
     </div>
   );
-};
-
-export default Cart;
+}
