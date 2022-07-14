@@ -10,27 +10,27 @@ import { FormContainer, CustomButton } from "./Login.styles";
 
 const Login = ({ setIsLoggedIn }) => {
   const [userValues, setUserValues] = useState({
-    username: "",
+    user: "",
     password: "",
   });
 
-  const { username, password } = userValues;
+  const { user, password } = userValues;
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      const response = await loginApi(username, password);
-      setIsLoggedIn(!!response);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const onChange = (event) => {
+  const onChange = (e) => {
     setUserValues({
       ...userValues,
-      [event.target.name]: event.target.value,
+      [e.target.name]: e.target.value,
     });
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await loginApi(user, password);
+      setIsLoggedIn(Boolean(response));
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -44,8 +44,9 @@ const Login = ({ setIsLoggedIn }) => {
             margin="normal"
             required
             fullWidth
-            label="Username"
-            name="username"
+            label="User"
+            name="user"
+            type="String"
             autoFocus
             onChange={onChange}
           />

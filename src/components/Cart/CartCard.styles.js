@@ -44,8 +44,9 @@ export const PriceContainer = styled(Column)`
 `;
 
 export const CustomButton = MUIStyled(Button)(() => ({
-  backgroundColor: "#203449",
+  backgroundColor: "lightBlue",
   "&:hover": {
     backgroundColor: "#FF0000",
   },
+  borderRadius: "20px",
 }));
