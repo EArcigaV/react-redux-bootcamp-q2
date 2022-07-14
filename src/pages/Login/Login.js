@@ -65,7 +65,7 @@ const Login = ({ setIsLoggedIn }) => {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            Log In
           </CustomButton>
         </Box>
       </FormContainer>
