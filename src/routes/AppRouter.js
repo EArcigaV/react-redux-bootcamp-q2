@@ -4,8 +4,8 @@ import Products from "../pages/Products";
 import Cart from "../pages/Cart";
 import { Header } from "../components/Header";
 import Login from "../pages/Login";
-import PrivateRoute from "./PrivateRoutes";
-import PublicRoute from "./PublicRoutes";
+import PrivateRoutes from "./PrivateRoutes";
+import PublicRoutes from "./PublicRoutes";
 
 export const AppRouter = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -14,18 +14,24 @@ export const AppRouter = () => {
     <Router>
       <Header />
       <Switch>
-        <PublicRoute
+        <PublicRoutes
           path="/login"
           setIsLoggedIn={setIsLoggedIn}
           component={Login}
           isLoggedIn={isLoggedIn}
         />
-        <PrivateRoute
+        <PrivateRoutes
           path="/products"
           component={Products}
           isLoggedIn={isLoggedIn}
         />
-        <PrivateRoute path="/cart" component={Cart} isLoggedIn={isLoggedIn} />
+        {/* <PrivateRoutes
+          path="/orders"
+          component={Orders}
+          isLoggedIn={isLoggedIn}
+        /> */}
+
+        <PrivateRoutes path="/cart" component={Cart} isLoggedIn={isLoggedIn} />
         <Redirect to="/login" />
       </Switch>
     </Router>
