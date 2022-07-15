@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
 import Products from "../pages/Products";
 import Cart from "../pages/Cart";
+import Orders from "../pages/Orders";
 import { Header } from "../components/Header";
 import Login from "../pages/Login";
 import PrivateRoutes from "./PrivateRoutes";
@@ -25,11 +26,11 @@ export const AppRouter = () => {
           component={Products}
           isLoggedIn={isLoggedIn}
         />
-        {/* <PrivateRoutes
+        <PrivateRoutes
           path="/orders"
           component={Orders}
           isLoggedIn={isLoggedIn}
-        /> */}
+        />
 
         <PrivateRoutes path="/cart" component={Cart} isLoggedIn={isLoggedIn} />
         <Redirect to="/login" />
