@@ -6,12 +6,12 @@ import { MainOrdersContainer } from "./Orders.styles";
 import { selectOrder } from "../../redux/slices/ordersSlice";
 
 const Orders = () => {
-  const { order } = useSelector(selectOrder);
+  const { order, message } = useSelector(selectOrder);
   //   const {
   //     data: { orders },
   //   } = Mockorders;
 
-  console.log("ORDER", order);
+  console.log("ORDER", order, message);
 
   return (
     <MainOrdersContainer>

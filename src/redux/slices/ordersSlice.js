@@ -37,12 +37,9 @@ export const getOrders = createAsyncThunk(
 );
 
 export const ordersSlice = createSlice({
-  name: "order",
+  name: "orders",
   initialState: {
-    order: [],
-    loading: false, // Boolean
-    // loading: "idle", //'idle' | 'pending' | 'succeeded' | 'failed'
-    error: null,
+    orders: [],
   },
   extraReducers: (builder) => {
     builder
@@ -66,8 +63,8 @@ export const ordersSlice = createSlice({
   },
 });
 
-export const selectOrder = (state) => state.order;
-export const selectOrderLoading = (state) => state.order.loading;
-export const selectOrderError = (state) => state.order.error;
+export const selectOrder = (state) => state.orders;
+export const selectOrderLoading = (state) => state.orders.loading;
+export const selectOrderError = (state) => state.orders.error;
 
 export default ordersSlice.reducer;

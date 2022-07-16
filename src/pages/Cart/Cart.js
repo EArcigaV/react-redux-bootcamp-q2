@@ -45,8 +45,12 @@ export default function Cart() {
       handleRemove({ productId: product.id });
       return;
     }
-    return e.target.value;
+
+    return value;
   };
+
+  const newTotal = (items) =>
+    items.reduce((acc, item) => acc + getTotal(item.quantity, item.price), 0);
 
   // const posts = [];
   return (
@@ -107,10 +111,14 @@ export default function Cart() {
                   variant="subtitle1"
                   width="100px"
                 >
-                  {/* $ {calculateTotal(products).toFixed(2)} */}
+                  $ {newTotal(products).toFixed(2)}
                 </Typography>
               </SummaryItem>
-              <CustomButton fullWidth variant="contained">
+              <CustomButton
+                // onClick={handleOrders}
+                fullWidth
+                variant="contained"
+              >
                 Checkout
               </CustomButton>
             </SummaryWrapper>
