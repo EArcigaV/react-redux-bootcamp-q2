@@ -15,7 +15,7 @@ import {
 import Typography from "@mui/material/Typography";
 import CardofCart from "../../components/Cart/CartCard";
 import { useDispatch } from "react-redux";
-import { reset, remove } from "../../redux/slices/cartSlice";
+import { reset, remove, updateProdTotal } from "../../redux/slices/cartSlice";
 
 export const getTotal = (quantity = 1, price) => {
   return quantity * price;
@@ -34,23 +34,28 @@ export default function Cart() {
     console.log("removed", productId);
   }
 
-  const handleQuantityChange = (e, product) => {
+  const handleQtyChange = (e, productId) => {
     e.preventDefault();
-    console.log("Qty: ", e.target.value);
-
     const { value } = e.target;
+    const productQty = Number.parseInt(value);
+
+    console.log("Qty: ", value);
+
     if (!value || value === "0") {
-      products.filter((item) => item.id !== product.id);
+      products.filter((item) => item.id !== productId);
       console.log("cero", value);
-      handleRemove({ productId: product.id });
+      handleRemove({ productId: productId });
       return;
     }
 
-    return value;
+    dispatch(updateProdTotal({ productId, quantity: productQty }));
   };
 
-  const newTotal = (items) =>
-    items.reduce((acc, item) => acc + getTotal(item.quantity, item.price), 0);
+  const newTotal = (products) =>
+    products.reduce(
+      (acc, product) => acc + getTotal(product.quantity, product.price),
+      0
+    );
 
   // const posts = [];
   return (
@@ -70,8 +75,9 @@ export default function Cart() {
               {products.map((product, idx, id) => (
                 <CardofCart
                   key={`${product.id}-${idx}`}
+                  label="qty"
                   product={product}
-                  onQuantityChange={handleQuantityChange}
+                  onQuantityChange={(e) => handleQtyChange(e, product.id)}
                 />
               ))}
               <CustomButtonR
