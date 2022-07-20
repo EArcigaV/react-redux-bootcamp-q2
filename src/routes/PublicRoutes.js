@@ -12,7 +12,7 @@ const PublicRoutes = ({
       {...rest}
       render={(props) =>
         isLoggedIn ? (
-          <Redirect to="/cart" />
+          <Redirect to="/products" />
         ) : (
           <Component check={true} setIsLoggedIn={setIsLoggedIn} {...props} />
         )

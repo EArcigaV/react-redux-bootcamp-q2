@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { selectProducts } from "../../redux/slices/cartSlice";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { CustomButton, CustomButtonR } from "./Cart.styles";
 import {
   CartWrapper,
@@ -15,7 +15,7 @@ import {
 import Typography from "@mui/material/Typography";
 import CardofCart from "../../components/Cart/CartCard";
 import { useDispatch } from "react-redux";
-import { reset, remove } from "../../redux/slices/cartSlice";
+import { reset, remove, updateProdTotal } from "../../redux/slices/cartSlice";
 
 export const getTotal = (quantity = 1, price) => {
   return quantity * price;
@@ -24,6 +24,7 @@ export const getTotal = (quantity = 1, price) => {
 export default function Cart() {
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
+  const history = useHistory();
 
   function handleReset() {
     dispatch(reset([]));
@@ -34,21 +35,35 @@ export default function Cart() {
     console.log("removed", productId);
   }
 
-  const handleQuantityChange = (e, product) => {
+  const handleQtyChange = (e, productId) => {
     e.preventDefault();
-    console.log("Qty: ", e.target.value);
-
     const { value } = e.target;
+    const productQty = Number.parseInt(value);
+
+    console.log("Qty: ", value);
+
     if (!value || value === "0") {
-      products.filter((item) => item.id !== product.id);
+      products.filter((item) => item.id !== productId);
       console.log("cero", value);
-      handleRemove({ productId: product.id });
+      handleRemove({ productId: productId });
       return;
     }
-    return e.target.value;
+
+    dispatch(updateProdTotal({ productId, quantity: productQty }));
   };
 
-  // const posts = [];
+  const newTotal = (products) =>
+    products.reduce(
+      (acc, product) => acc + getTotal(product.quantity, product.price),
+      0
+    );
+
+  function handleCheckout(order) {
+    //dispatch(order());
+    history.push("/orders");
+    dispatch(reset());
+  }
+
   return (
     <div>
       {products.length > 0 ? (
@@ -66,8 +81,9 @@ export default function Cart() {
               {products.map((product, idx, id) => (
                 <CardofCart
                   key={`${product.id}-${idx}`}
+                  label="qty"
                   product={product}
-                  onQuantityChange={handleQuantityChange}
+                  onQuantityChange={(e) => handleQtyChange(e, product.id)}
                 />
               ))}
               <CustomButtonR
@@ -107,10 +123,14 @@ export default function Cart() {
                   variant="subtitle1"
                   width="100px"
                 >
-                  {/* $ {calculateTotal(products).toFixed(2)} */}
+                  $ {newTotal(products).toFixed(2)}
                 </Typography>
               </SummaryItem>
-              <CustomButton fullWidth variant="contained">
+              <CustomButton
+                onClick={handleCheckout}
+                fullWidth
+                variant="contained"
+              >
                 Checkout
               </CustomButton>
             </SummaryWrapper>

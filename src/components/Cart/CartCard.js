@@ -14,7 +14,18 @@ import {
   CustomButton,
 } from "./CartCard.styles";
 
+import { useDispatch } from "react-redux";
+import { remove } from "../../redux/slices/cartSlice";
+
 const CardofCart = ({ product, onQuantityChange }) => {
+  const dispatch = useDispatch();
+  //const products = useSelector(selectProducts);
+
+  function handleRemove({ productId }) {
+    dispatch(remove({ productId }));
+    console.log("removed", productId);
+  }
+
   let formattedPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -41,7 +52,12 @@ const CardofCart = ({ product, onQuantityChange }) => {
                 shrink: true,
               }}
             />
-            <CustomButton variant="contained">Remove</CustomButton>
+            <CustomButton
+              onClick={() => handleRemove({ productId: product.id })}
+              variant="contained"
+            >
+              Remove {product.id}
+            </CustomButton>
           </Column>
           <PriceContainer>
             <Typography>Price: </Typography>

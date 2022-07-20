@@ -9,12 +9,21 @@ import {
   CustomButton,
 } from "./ProductCard.styles";
 
+import { useDispatch } from "react-redux";
+import { add } from "../../redux/slices/cartSlice";
+
 export default function ProductCard({ product }) {
+  const dispatch = useDispatch();
   const { name, price, categories, images } = product;
   let formattedPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   }).format(price);
+
+  function handleAdd({ productId }) {
+    dispatch(add({ product }));
+    console.log("added", productId);
+  }
 
   return (
     <StyledCard>
@@ -35,7 +44,11 @@ export default function ProductCard({ product }) {
         </Typography>
         <Divider light />
         <ButtonContainer>
-          <CustomButton fullWidth variant="contained">
+          <CustomButton
+            onClick={() => handleAdd({ productId: product.id })}
+            fullWidth
+            variant="contained"
+          >
             Add to Cart
           </CustomButton>
         </ButtonContainer>
