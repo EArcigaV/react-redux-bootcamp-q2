@@ -58,7 +58,7 @@ export default function Cart() {
       0
     );
 
-  function handleCheckout() {
+  function handleCheckout(order) {
     //dispatch(order());
     history.push("/orders");
     dispatch(reset());
