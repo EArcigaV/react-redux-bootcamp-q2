@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { selectProducts } from "../../redux/slices/cartSlice";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { CustomButton, CustomButtonR } from "./Cart.styles";
 import {
   CartWrapper,
@@ -24,6 +24,7 @@ export const getTotal = (quantity = 1, price) => {
 export default function Cart() {
   const dispatch = useDispatch();
   const products = useSelector(selectProducts);
+  const history = useHistory();
 
   function handleReset() {
     dispatch(reset([]));
@@ -57,7 +58,12 @@ export default function Cart() {
       0
     );
 
-  // const posts = [];
+  function handleCheckout() {
+    //dispatch(order());
+    history.push("/orders");
+    dispatch(reset());
+  }
+
   return (
     <div>
       {products.length > 0 ? (
@@ -121,7 +127,7 @@ export default function Cart() {
                 </Typography>
               </SummaryItem>
               <CustomButton
-                // onClick={handleOrders}
+                onClick={handleCheckout}
                 fullWidth
                 variant="contained"
               >

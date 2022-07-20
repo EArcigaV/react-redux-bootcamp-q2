@@ -63,6 +63,8 @@ export const ordersSlice = createSlice({
   },
 });
 
+export const { order } = ordersSlice.actions;
+
 export const selectOrder = (state) => state.orders;
 export const selectOrderLoading = (state) => state.orders.loading;
 export const selectOrderError = (state) => state.orders.error;
