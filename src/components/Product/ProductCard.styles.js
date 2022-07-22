@@ -20,8 +20,8 @@ export const StyledCard = MUIStyled(Card)(() => ({
   },
 }));
 
-export const StyledButton = MUIStyled(Button)(() => ({
-  backgroundColor: "#203449",
+export const CustomButton = MUIStyled(Button)(() => ({
+  backgroundColor: "lightblue",
   "&:hover": {
     backgroundColor: "#00c853",
   },
